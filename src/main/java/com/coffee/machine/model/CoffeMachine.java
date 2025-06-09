@@ -1,6 +1,12 @@
 package com.coffee.machine.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class CoffeMachine {
+    // Getters et setters
     private int cupsAvailable;
     private boolean isOn;
 
@@ -18,21 +24,5 @@ public class CoffeMachine {
         }
     }
 
-    // Getters et setters
-    public int getCupsAvailable() {
-        return cupsAvailable;
-    }
-
-    public void setCupsAvailable(int cupsAvailable) {
-        this.cupsAvailable = cupsAvailable;
-    }
-
-    public boolean isOn() {
-        return isOn;
-    }
-
-    public void setOn(boolean on) {
-        isOn = on;
-    }
 }
 

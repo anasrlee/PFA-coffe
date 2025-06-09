@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tables</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Liste des Tables</h1>
+
+<!-- Formulaire pour prendre une commande -->
+<form th:action="@{/server/take-order}" method="post">
+    <select name="tableId" required>
+        <option value="">Sélectionner une table</option>
+        <option th:each="table : ${tables}"
+                th:value="${table.id}"
+                th:text="'Table ' + ${table.name}"></option>
+    </select>
+
+    <input type="text" name="orderDesc" placeholder="Description" required>
+    <button type="submit">Prendre Commande</button>
+</form>
+
+<!-- Lien vers la liste des commandes -->
+<a th:href="@{/server/orders}">Voir toutes les commandes</a>
+</body>
+</html>

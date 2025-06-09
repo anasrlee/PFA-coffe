@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders for Table</title>
+</head>
+<body>
+<h1>Orders for Table <span th:text="${tableId}"></span></h1>
+<table>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.description}"></td>
+        <td th:text="${order.status}"></td>
+    </tr>
+</table>
+</body>
+</html>

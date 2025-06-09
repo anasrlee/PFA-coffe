@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Commandes Barman</title>
+</head>
+<body>
+<h1>Commandes en attente</h1>
+<div th:each="order : ${pendingOrders}">
+    <p th:text="${order.description}"></p>
+    <form th:action="@{/barista/start-order/{id}(id=${order.id})}" method="post">
+        <button type="submit">Commencer préparation</button>
+    </form>
+</div>
+
+<h1>Commandes en préparation</h1>
+<div th:each="order : ${inProgressOrders}">
+    <p th:text="${order.description}"></p>
+    <form th:action="@{/barista/complete-order/{id}(id=${order.id})}" method="post">
+        <button type="submit">Commande prête</button>
+    </form>
+</div>
+</body>
+</html>

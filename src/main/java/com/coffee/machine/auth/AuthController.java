@@ -2,8 +2,6 @@ package com.coffee.machine.auth;
 
 import com.coffee.machine.auth.exceptions.InvalidCredentialsException;
 import com.coffee.machine.model.User;
-import com.coffee.machine.model.UserRole;
-import com.coffee.machine.auth.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Commandes</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Toutes les Commandes</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Table</th>
+    <th>Description</th>
+    <th>Statut</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="order : ${orders}">
+    <td th:text="${order.id}"></td>
+    <td th:text="'Table ' + ${order.table.name}"></td>
+    <td th:text="${order.description}"></td>
+    <td th:text="${order.status}"></td>
+    <td>
+      <form th:action="@{/server/update-status/{id}(id=${order.id})}" method="post">
+        <select name="newStatus">
+          <option th:each="status : ${T(com.coffee.machine.model.OrderStatus).values()}"
+                  th:value="${status}"
+                  th:text="${status}"
+                  th:selected="${status == order.status}"></option>
+        </select>
+        <button type="submit">Mettre à jour</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h1>Tableau de Bord des Commandes</h1>
+
+<div class="clearfix">
+  <!-- Colonne EN ATTENTE -->
+  <div class="order-column">
+    <h2>En Attente</h2>
+    <div th:each="order : ${pendingOrders}"
+         class="order-card status-pending">
+      <p>Table: <span th:text="${order.table.name}"></span></p>
+      <p th:text="${order.description}"></p>
+      <form th:action="@{/server/orders/update/{id}(id=${order.id})}" method="post">
+        <button type="submit" name="newStatus" value="IN_PROGRESS">
+          Commencer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Colonne EN COURS -->
+  <div class="order-column">
+    <h2>En Cours</h2>
+    <div th:each="order : ${inProgressOrders}"
+         class="order-card status-inprogress">
+      <p>Table: <span th:text="${order.table.name}"></span></p>
+      <p th:text="${order.description}"></p>
+      <form th:action="@{/server/orders/update/{id}(id=${order.id})}" method="post">
+        <button type="submit" name="newStatus" value="COMPLETED">
+          Terminer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Colonne TERMINÉE -->
+  <div class="order-column">
+    <h2>Terminées</h2>
+    <div th:each="order : ${completedOrders}"
+         class="order-card status-completed">
+      <p>Table: <span th:text="${order.table.name}"></span></p>
+      <p th:text="${order.description}"></p>
+      <form th:action="@{/server/orders/update/{id}(id=${order.id})}" method="post">
+        <button type="submit" name="newStatus" value="DELIVERED">
+          Livrer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Colonne LIVRÉE -->
+  <div class="order-column">
+    <h2>Livrées</h2>
+    <div th:each="order : ${deliveredOrders}"
+         class="order-card status-delivered">
+      <p>Table: <span th:text="${order.table.name}"></span></p>
+      <p th:text="${order.description}"></p>
+      <p>Livrée à: <span th:text="${#temporals.format(order.deliveryTime, 'HH:mm')}"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- Retour aux tables -->
+<a th:href="@{/server/tables}">Retour aux tables</a>
+</body>
+</html>
