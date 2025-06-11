@@ -1,5 +1,6 @@
 package com.coffee.machine.controller;
 
+import com.coffee.machine.model.Order;
 import com.coffee.machine.model.OrderStatus;
 import com.coffee.machine.model.User;
 import com.coffee.machine.service.OrderService;
@@ -8,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/server")
@@ -21,12 +24,14 @@ public class ServerController {
         this.tableService = tableService;
     }
 
+    // Interface pour voir toutes les tables
     @GetMapping("/tables")
     public String serverInterface(Model model) {
         model.addAttribute("tables", tableService.getAllTables());
         return "server/tables";
     }
 
+    // Prendre une commande
     @PostMapping("/take-order")
     public String takeOrder(@RequestParam Long tableId,
                             @RequestParam String orderDesc,
@@ -36,6 +41,7 @@ public class ServerController {
         return "redirect:/server/tables";
     }
 
+    // Dashboard des commandes classées par statut
     @GetMapping("/orders")
     public String viewOrdersDashboard(Model model) {
         model.addAttribute("pendingOrders", orderService.getOrdersByStatus(OrderStatus.PENDING));
@@ -45,6 +51,7 @@ public class ServerController {
         return "server/orders";
     }
 
+    // Mise à jour du statut
     @PostMapping("/orders/update-status/{orderId}")
     public String updateOrderStatus(@PathVariable Long orderId,
                                     @RequestParam OrderStatus newStatus) {

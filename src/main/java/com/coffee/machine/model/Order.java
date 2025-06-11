@@ -3,10 +3,11 @@ package com.coffee.machine.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "customer_orders")  // Fixed annotation from @CoffeTable to @Table
+@Table(name = "orders")  // Fixed annotation from @CoffeTable to @Table
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +24,12 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "table_id", nullable = false)
-    private CoffeTable table;  // This requires the CoffeeTable entity to exist
+    private CoffeTable table; // This requires the CoffeeTable entity to exist
 
     @ManyToOne
     @JoinColumn(name = "server_id", nullable = false)
     private User server;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
 }

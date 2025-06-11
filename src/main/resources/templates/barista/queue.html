@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>File d'attente Barman</title>
+</head>
+<body>
+<h1>File d'attente des préparations</h1>
+
+<h2>Statut des ingrédients</h2>
+<pre th:text="${ingredientStatus}"></pre>
+
+<h2>Commandes en attente</h2>
+<div th:each="item : ${queue}">
+    <h3>Commande #<span th:text="${item.order.id}"></span></h3>
+    <p>Article: <span th:text="${item.ingredient.name}"></span></p>
+    <p>Quantité: <span th:text="${item.quantity}"></span></p>
+    <p>Instructions: <span th:text="${item.specialInstruction}"></span></p>
+    <p>Statut:
+        <select onchange="updateStatus(this, ${item.id})">
+            <option th:selected="${item.status == 'WAITING'}"
+                    value="WAITING">En attente</option>
+            <option th:selected="${item.status == 'PREPARING'}"
+                    value="PREPARING">En préparation</option>
+            <option th:selected="${item.status == 'READY'}"
+                    value="READY">Prêt</option>
+        </select>
+    </p>
+    <hr>
+</div>
+
+<script>
+    function updateStatus(selectElement, itemId) {
+        const newStatus = selectElement.value;
+        fetch(`/barista/update-status/${itemId}?newStatus=${newStatus}`, {
+            method: 'POST'
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>
