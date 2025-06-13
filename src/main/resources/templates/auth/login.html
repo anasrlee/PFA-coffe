@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - Coffee Machine</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/auth.css" rel="stylesheet">
+  <!-- Lien vers votre fichier CSS externe -->
+</head>
+<body class="auth-container">
+<div class="container d-flex justify-content-center">
+  <div class="login-card">
+    <div class="mb-4">
+      <img th:src="@{/images/logo.png}" alt="Coffee Machine Logo" class="login-logo">
+      <h2 class="login-title">Connexion</h2>
+    </div>
+
+    <!-- Messages d'erreur -->
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span th:text="${errorMessage}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Formulaire -->
+    <form th:action="@{/login}" method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Nom d'utilisateur</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary login-btn">
+          Se connecter
+        </button>
+      </div>
+    </form>
+
+    <div class="forgot-password">
+      <a href="#" class="text-decoration-none">Mot de passe oublié ?</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

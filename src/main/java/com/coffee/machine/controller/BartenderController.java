@@ -8,6 +8,6 @@ public class BartenderController {
 
     @GetMapping("/bartender/orders")
     public String baristaInterface() {
-        return "bartender"; // barista.html
+        return "bartender";
     }
 }

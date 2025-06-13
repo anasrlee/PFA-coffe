@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes Table #<span th:text="${tableId}"></span> - Coffee Machine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/orders.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#" th:href="@{/orders}">
+                            <i class="bi bi-arrow-left"></i> Retour
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1>
+                    <i class="bi bi-table"></i> Commandes pour la table #<span th:text="${tableId}"></span>
+                </h1>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="bi bi-list-check"></i> Détails des commandes
+                        </div>
+                        <div class="card-body">
+                            <div th:each="order : ${orders}" class="mb-4 p-3 border-bottom">
+                                <div class="d-flex justify-content-between">
+                                    <h5>Commande #<span th:text="${order.id}"></span></h5>
+                                    <span th:switch="${order.status}" class="badge">
+                                            <span th:case="'PENDING'" class="bg-warning">En attente</span>
+                                            <span th:case="'IN_PROGRESS'" class="bg-info">En préparation</span>
+                                            <span th:case="'COMPLETED'" class="bg-success">Terminée</span>
+                                        </span>
+                                </div>
+                                <p class="text-muted" th:text="${#temporals.format(order.orderTime, 'HH:mm')}"></p>
+                                <p th:text="${order.description}"></p>
+
+                                <h6><i class="bi bi-cup-hot"></i> Items:</h6>
+                                <ul th:if="${order.items != null and !order.items.empty}">
+                                    <li th:each="item : ${order.items}">
+                                        <span th:text="${item.quantity} + ' x ' + ${item.ingredient.name}"></span>
+                                        <small th:if="${item.specialInstruction}" class="text-muted">
+                                            (<span th:text="${item.specialInstruction}"></span>)
+                                        </small>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <i class="bi bi-credit-card"></i> Actions
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-primary w-100 mb-2">
+                                <i class="bi bi-printer"></i> Imprimer ticket
+                            </button>
+                            <button class="btn btn-success w-100 mb-2">
+                                <i class="bi bi-check-circle"></i> Marquer comme payée
+                            </button>
+                            <a th:href="@{'/orders/table/' + ${tableId} + '/close'}" class="btn btn-danger w-100">
+                                <i class="bi bi-x-circle"></i> Fermer table
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

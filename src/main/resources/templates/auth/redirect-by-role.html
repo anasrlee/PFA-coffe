@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=/admin/dashboard" th:attr="content='0; url=' + ${#authentication.principal.role == 'ADMIN' ? '/admin/dashboard' : '/user/dashboard'}">
+    <title>Redirection en cours...</title>
+</head>
+<body>
+<div class="text-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p>Redirection en cours...</p>
+</div>
+</body>
+</html>

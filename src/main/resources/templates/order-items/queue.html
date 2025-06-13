@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File d'attente - Coffee Machine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/order-items.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block sidebar">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" th:href="@{/api/order-items/queue}">
+                            <i class="bi bi-list-ol"></i> File d'attente
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/bartender/orders}">
+                            <i class="bi bi-cup-hot"></i> Commandes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/api/order-items/ingredients}">
+                            <i class="bi bi-box-seam"></i> Stock ingrédients
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1><i class="bi bi-list-ol"></i> File d'attente des préparations</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button class="btn btn-sm btn-outline-secondary" id="refreshQueue">
+                        <i class="bi bi-arrow-clockwise"></i> Actualiser
+                    </button>
+                </div>
+            </div>
+
+            <!-- File d'attente -->
+            <div class="queue-container" id="queueItems">
+                <!-- Les items seront chargés dynamiquement via JavaScript -->
+                <div class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                    <p>Chargement de la file d'attente...</p>
+                </div>
+            </div>
+
+            <!-- Section monitoring ingrédients -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <i class="bi bi-box-seam"></i> Niveau des ingrédients
+                </div>
+                <div class="card-body">
+                    <div id="ingredientsMonitoring">
+                        <!-- Contenu chargé dynamiquement -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modals -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Changer le statut</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <select class="form-select" id="statusSelect">
+                    <option th:each="status : ${T(com.coffee.machine.model.ItemStatus).values()}"
+                            th:value="${status}"
+                            th:text="${status.name()}"></option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="confirmStatusChange">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/order-items.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* Styles pour la file d'attente */
+.queue-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.queue-item {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid;
+}
+
+.queue-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.queue-item.PENDING {
+    border-left-color: #ffc107;
+}
+
+.queue-item.IN_PROGRESS {
+    border-left-color: #0dcaf0;
+}
+
+.queue-item.COMPLETED {
+    border-left-color: #198754;
+}
+
+.queue-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.queue-item-id {
+    font-weight: bold;
+    color: #6c757d;
+}
+
+.queue-item-status {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.status-PENDING {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.status-IN_PROGRESS {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.status-COMPLETED {
+    background-color: #d1e7dd;
+    color: #0a3622;
+}
+
+.queue-item-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Barres de progression ingrédients */
+.ingredient-progress {
+    height: 25px;
+    margin-bottom: 0.5rem;
+}
+
+.ingredient-name {
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.progress-bar.low {
+    background-color: #dc3545;
+}
+
+.progress-bar.medium {
+    background-color: #fd7e14;
+}
+
+.progress-bar.high {
+    background-color: #198754;
+}
