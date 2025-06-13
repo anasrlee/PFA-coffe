@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Paiement confirmé</title>
+</head>
+<body>
+<h1>Paiement confirmé</h1>
+<p>Commande #<span th:text="${payment.order.id}"></span></p>
+<p>Montant: <span th:text="${payment.amount}"></span>€</p>
+<p>Méthode: <span th:text="${payment.method}"></span></p>
+
+<h2>Reçu</h2>
+<pre th:text="${receipt.content}"></pre>
+
+<a href="/cashier/completed-orders">Retour</a>
+</body>
+</html>

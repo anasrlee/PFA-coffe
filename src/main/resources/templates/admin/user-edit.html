@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User</title>
+</head>
+<body>
+<h1>Edit User</h1>
+<form th:action="@{/admin/users/{id}(id=${user.id})}" method="post">
+    <input type="text" th:value="${user.username}" name="username">
+    <select name="role">
+        <option th:each="role : ${T(com.coffee.machine.model.UserRole).values()}"
+                th:value="${role}"
+                th:text="${role}"
+                th:selected="${role == user.role}">
+        </option>
+    </select>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

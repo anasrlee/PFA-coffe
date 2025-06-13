@@ -14,6 +14,9 @@ public class CoffeTable {
 
     private String name;
 
+    @Column(name = "table_number")
+    private String tableNumber;
+
     @OneToMany(mappedBy = "table")
     private List<Order> orders;
 }

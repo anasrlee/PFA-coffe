@@ -31,4 +31,9 @@ public class OrderItemController {
     public String monitorIngredients() {
         return orderItemService.monitorIngredients();
     }
+
+    @GetMapping("/{orderId}/items")
+    public List<OrderItem> getOrderItems(@PathVariable Long orderId) {
+        return orderItemService.getItemsByOrderId(orderId);
+    }
 }
